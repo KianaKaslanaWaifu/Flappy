@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Flappy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Parallax Background Elements -->
+        <div class="bg-layer stars"></div>
+        <div class="bg-layer clouds"></div>
+        
+        <div id="score-board">
+            <div class="score-box">
+                <span class="label">SCORE</span>
+                <span id="current-score">0</span>
+            </div>
+            <div class="score-box">
+                <span class="label">BEST</span>
+                <span id="high-score">0</span>
+            </div>
+        </div>
+
+        <div id="pipes-container"></div>
+        
+        <div id="bird">
+            <div class="bird-eye"></div>
+            <div class="bird-wing"></div>
+        </div>
+
+        <!-- UI Screens -->
+        <div id="ui-screen" class="active">
+            <div class="glass-panel">
+                <h1 id="ui-title">NEON<br>FLAPPY</h1>
+                <p id="ui-subtitle">Press SPACE or TAP to jump</p>
+                <button id="start-btn">PLAY</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

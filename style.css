@@ -1,0 +1,260 @@
+:root {
+    --bg-color-top: #0f172a;
+    --bg-color-bottom: #1e1b4b;
+    --bird-color: #06b6d4;
+    --bird-glow: rgba(6, 182, 212, 0.6);
+    --pipe-color: #ec4899;
+    --pipe-glow: rgba(236, 72, 153, 0.5);
+    --text-color: #f8fafc;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    user-select: none;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    max-height: 850px;
+    background: linear-gradient(180deg, var(--bg-color-top) 0%, var(--bg-color-bottom) 100%);
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+/* Background Animations */
+.bg-layer {
+    position: absolute;
+    width: 200%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.stars {
+    background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.3;
+    animation: moveStars 60s linear infinite;
+}
+
+@keyframes moveStars {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* Score Board */
+#score-board {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.score-box {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.score-box .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+}
+
+.score-box span:not(.label) {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--text-color);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    line-height: 1;
+}
+
+/* Bird */
+#bird {
+    position: absolute;
+    width: 34px;
+    height: 24px;
+    background: var(--bird-color);
+    border-radius: 12px 16px 12px 12px;
+    left: 50px;
+    top: 300px; /* initial top */
+    box-shadow: 0 0 15px var(--bird-glow), inset -4px -4px 10px rgba(0,0,0,0.2), inset 2px 2px 5px rgba(255,255,255,0.4);
+    z-index: 20;
+    transition: transform 0.1s ease;
+}
+
+.bird-eye {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    top: 4px;
+    right: 6px;
+    box-shadow: 2px 0 0 #000;
+}
+
+.bird-wing {
+    position: absolute;
+    width: 14px;
+    height: 8px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    top: 10px;
+    left: -2px;
+    animation: flap 0.3s infinite alternate;
+    box-shadow: 0 0 5px rgba(255,255,255,0.5);
+}
+
+@keyframes flap {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-20deg); }
+}
+
+/* Pipes */
+#pipes-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.pipe {
+    position: absolute;
+    width: 60px;
+    background: linear-gradient(90deg, #d946ef 0%, var(--pipe-color) 50%, #c026d3 100%);
+    box-shadow: 0 0 20px var(--pipe-glow), inset 0 0 10px rgba(255,255,255,0.2);
+    border-radius: 4px;
+}
+
+.pipe.top {
+    top: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom: 4px solid rgba(255, 255, 255, 0.4);
+}
+
+.pipe.bottom {
+    bottom: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-top: 4px solid rgba(255, 255, 255, 0.4);
+}
+
+/* UI Screens */
+#ui-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#ui-screen.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.glass-panel {
+    background: rgba(20, 20, 30, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.05);
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#ui-screen.active .glass-panel {
+    transform: translateY(0);
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #06b6d4, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+}
+
+#ui-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+button {
+    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4), inset 0 -3px 0 rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(99, 102, 241, 0.5), inset 0 -3px 0 rgba(0,0,0,0.2);
+}
+
+button:active {
+    transform: translateY(2px);
+    box-shadow: 0 5px 10px rgba(99, 102, 241, 0.4), inset 0 -1px 0 rgba(0,0,0,0.2);
+}
